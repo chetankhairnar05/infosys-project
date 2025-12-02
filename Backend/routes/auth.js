@@ -8,7 +8,8 @@ const router = express.Router();
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, vehicleNumber, vehicleType } = req.body;
+    const { name, email, password, vehicleNumber, vehicleType, phone } =
+      req.body;
 
     // check if user already exists
     const existingUser = await User.findOne({ email });
@@ -25,6 +26,7 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       vehicleNumber,
       vehicleType,
+      phone,
     });
 
     await user.save();
@@ -48,7 +50,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Incorrect password" });
 
     // Create JWT token
-    const token = jwt.sign({ id: user._id, role: user.role }, "SECRETKEY", {
+    const token = jwt.sign({ id: user._id, role: user.role }, "secret123", {
       expiresIn: "1h",
     });
 
@@ -56,6 +58,12 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+const authMiddleware = require("../middleware/authMiddleware");
+
+router.get("/dashboard", authMiddleware, (req, res) => {
+  res.json({ message: "Welcome to your dashboard!", user: req.user });
 });
 
 module.exports = router;

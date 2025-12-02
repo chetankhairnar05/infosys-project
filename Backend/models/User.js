@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   vehicleNumber: { type: String, required: true },
   vehicleType: { type: String, required: true },
+  phone: { type: String, required: true },
   role: { type: String, default: "user" }, // admin or user
 });
 
