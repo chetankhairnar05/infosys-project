@@ -7,7 +7,12 @@ const UserSchema = new mongoose.Schema({
   vehicleNumber: { type: String, required: true },
   vehicleType: { type: String, required: true },
   phone: { type: String, required: true },
-  role: { type: String, default: "user" }, // admin or user
+  // admin or user
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

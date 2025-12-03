@@ -66,4 +66,15 @@ router.get("/dashboard", authMiddleware, (req, res) => {
   res.json({ message: "Welcome to your dashboard!", user: req.user });
 });
 
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password"); //fetches user but remove password
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
