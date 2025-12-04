@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/admin", require("./routes/admin"));
+const companyRoutes = require("./routes/company");
+app.use("/api/company", companyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

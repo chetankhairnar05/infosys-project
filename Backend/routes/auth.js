@@ -8,7 +8,7 @@ const router = express.Router();
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, vehicleNumber, vehicleType, phone } =
+    const { name, email, password, vehicleNumber, vehicleType, phone, role } =
       req.body;
 
     // check if user already exists
@@ -27,6 +27,7 @@ router.post("/register", async (req, res) => {
       vehicleNumber,
       vehicleType,
       phone,
+      role,
     });
 
     await user.save();
@@ -72,6 +73,19 @@ router.get("/profile", authMiddleware, async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/vehicle", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password"); //fetches user but remove password
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({
+      vehicleNumber: user.vehicleNumber,
+      vehicleType: user.vehicleType,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
