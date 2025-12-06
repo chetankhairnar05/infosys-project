@@ -9,7 +9,16 @@ app.use(express.json());
 
 app.use("/api/admin", require("./routes/admin"));
 const companyRoutes = require("./routes/company");
+const userRoutes = require("./routes/user");
 app.use("/api/company", companyRoutes);
+app.use("/api/user", userRoutes);
+
+const authRoutes = require("./routes/auth");
+
+app.use("/api/auth", authRoutes);
+// app.use("/api/admin", authRoutes);
+
+const mongoose = require("mongoose");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -31,13 +40,6 @@ app.post("/login", (req, res) => {
 
   res.json({ message: "Login successful", role: user.role });
 });
-
-const authRoutes = require("./routes/auth");
-
-app.use("/api/auth", authRoutes);
-// app.use("/api/admin", authRoutes);
-
-const mongoose = require("mongoose");
 
 // Replace 'your_connection_string' with your actual MongoDB URL
 mongoose

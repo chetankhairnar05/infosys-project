@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+//user is validated with jwt
 module.exports = (req, res, next) => {
   const token = req.header("x-auth-token");//x-auth-token
 
