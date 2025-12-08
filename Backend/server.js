@@ -7,6 +7,10 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+const slotRoutes = require("./routes/slotRoutes");
+
+app.use("/api/slots", slotRoutes);
+
 app.use("/api/admin", require("./routes/admin"));
 const companyRoutes = require("./routes/company");
 const userRoutes = require("./routes/user");
