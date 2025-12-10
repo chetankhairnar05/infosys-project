@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const port = 5000;
-require("dotenv").config();
 
+require("dotenv").config();
+const port = process.env.PORT;
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -25,7 +25,13 @@ app.use("/api/auth", authRoutes);
 const mongoose = require("mongoose");
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Server running successfully 🚀");
+});
+app.get("/description", (req, res) => {
+  res.send("Hello world 🚀");
+});
+app.get("/status", (req, res) => {
+  res.send("Development status 🚀");
 });
 
 const users = [
